@@ -1,5 +1,6 @@
 [workspace]
 members = [
 	"css",
+	"tf2",
 ]
 resolver = "2"
