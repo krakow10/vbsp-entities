@@ -13,4 +13,4 @@ tf2 = []
 
 [dependencies]
 serde = "1.0.218"
-vbsp = { git = "https://github.com/krakow10/vbsp", rev = "06ac1fdd29618db154a81fbc4ceb3cfe558d2671" }
+vbsp = { version = "0.7.0-codegen5", registry = "strafesnet", default-features = false }

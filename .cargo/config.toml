@@ -1,0 +1,2 @@
+[registries.strafesnet]
+index = "sparse+https://git.itzana.me/api/packages/strafesnet/cargo/"
