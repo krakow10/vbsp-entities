@@ -5,7 +5,9 @@ edition = "2024"
 
 [features]
 default = [
+	"css",
 ]
+css = []
 
 [dependencies]
 serde = "1.0.218"
