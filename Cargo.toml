@@ -6,8 +6,10 @@ edition = "2024"
 [features]
 default = [
 	"css",
+	"tf2",
 ]
 css = []
+tf2 = []
 
 [dependencies]
 serde = "1.0.218"
