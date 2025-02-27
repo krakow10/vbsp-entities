@@ -1,6 +1,101 @@
 use serde::Deserialize;
-use vbsp::deserialize_bool;
-use vbsp::{Angles, Color, LightColor, Negated, Vector};
+use vbsp::{Angles, Color, LightColor, Vector};
+
+use std::str::FromStr;
+use serde::de::{Error, Unexpected};
+use serde::Deserializer;
+
+#[derive(Debug, Clone)]
+pub enum Negated {
+    Yes,
+    No,
+    MatchingCriteria,
+}
+pub struct NegatedParseErr;
+impl FromStr for Negated {
+    type Err = NegatedParseErr;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "1" => Ok(Negated::Yes),
+            "0" => Ok(Negated::No),
+            "allow entities that match criteria" => Ok(Negated::MatchingCriteria),
+            _ => Err(NegatedParseErr),
+        }
+    }
+}
+
+struct NegatedVisitor;
+impl serde::de::Visitor<'_> for NegatedVisitor {
+    type Value = Negated;
+
+    fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(formatter, "Negated value")
+    }
+
+    fn visit_i64<E>(self, v: i64) -> Result<Self::Value, E>
+    where
+        E: Error,
+    {
+        match v {
+            0 => Ok(Negated::No),
+            1 => Ok(Negated::Yes),
+            _ => Err(E::invalid_value(Unexpected::Signed(v), &"0 or 1")),
+        }
+    }
+
+    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E>
+    where
+        E: Error,
+    {
+        v.parse()
+            .map_err(|_| E::invalid_value(Unexpected::Str(v), &"Negated"))
+    }
+}
+
+impl<'de> Deserialize<'de> for Negated {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        deserializer.deserialize_any(NegatedVisitor)
+    }
+}
+
+struct BoolVisitor;
+impl serde::de::Visitor<'_> for BoolVisitor {
+    type Value = bool;
+
+    fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(formatter, "bool value")
+    }
+
+    fn visit_i64<E>(self, v: i64) -> Result<Self::Value, E>
+    where
+        E: Error,
+    {
+        match v {
+            0 => Ok(false),
+            1 => Ok(true),
+            _ => Err(E::invalid_value(Unexpected::Signed(v), &"0 or 1")),
+        }
+    }
+
+    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E>
+    where
+        E: Error,
+    {
+        match v {
+            "0" | "no" => Ok(false),
+            "1" | "yes" => Ok(true),
+            other => Err(E::invalid_value(Unexpected::Str(other), &"bool")),
+        }
+    }
+}
+
+pub fn deserialize_bool<'de, D: Deserializer<'de>>(deserializer: D) -> Result<bool, D::Error> {
+    deserializer.deserialize_any(BoolVisitor)
+}
 
 #[derive(Debug, Clone, Deserialize)]
 #[non_exhaustive]
