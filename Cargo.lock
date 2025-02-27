@@ -580,7 +580,7 @@ dependencies = [
 
 [[package]]
 name = "vbsp-entities-css"
-version = "0.1.0"
+version = "0.1.0-egg"
 dependencies = [
  "serde",
  "vbsp",
@@ -588,7 +588,7 @@ dependencies = [
 
 [[package]]
 name = "vbsp-entities-tf2"
-version = "0.1.0"
+version = "0.1.0-egg"
 dependencies = [
  "serde",
  "vbsp",
