@@ -1,7 +1,6 @@
 use serde::Deserialize;
 use vbsp::deserialize_bool;
 use vbsp::{Angles, Color, LightColor, Negated, Vector};
-
 #[derive(Debug, Clone, Deserialize)]
 #[non_exhaustive]
 #[serde(tag = "classname")]
@@ -1264,7 +1263,7 @@ pub struct EnvLightglow<'a> {
     pub parentname: Option<&'a str>,
     #[serde(default)]
     pub renderamt: Option<u8>,
-    pub rendercolor: &'a str,
+    pub rendercolor: Color,
     #[serde(default)]
     pub spawnflags: Option<u32>,
     #[serde(default)]
@@ -1896,7 +1895,7 @@ pub struct FuncBrush<'a> {
     #[serde(default)]
     pub solidbsp: bool,
     #[serde(default)]
-    pub solidity: Option<&'a str>,
+    pub solidity: Option<u8>,
     pub spawnflags: u32,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
@@ -2231,7 +2230,7 @@ pub struct FuncDustmotes<'a> {
     pub alpha: u8,
     #[serde(default)]
     pub angles: Option<Angles>,
-    pub color: &'a str,
+    pub color: Color,
     pub distmax: u16,
     #[serde(default)]
     pub fallspeed: Option<i32>,
@@ -3313,7 +3312,7 @@ pub struct InfoNull<'a> {
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct InfoObserverPoint<'a> {
-    pub angles: &'a str,
+    pub angles: Vector,
     #[serde(default)]
     pub associated_team_entity: Option<&'a str>,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -4122,7 +4121,7 @@ pub struct KeyframeRope<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub usewind: bool,
-    pub width: &'a str,
+    pub width: f32,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct Light<'a> {
@@ -4134,7 +4133,7 @@ pub struct Light<'a> {
     pub _fifty_percent_distance: Option<i32>,
     #[serde(default)]
     pub _hardfalloff: Option<u16>,
-    pub _light: &'a str,
+    pub _light: LightColor,
     pub _lighthdr: &'a str,
     pub _lightscalehdr: f32,
     #[serde(default)]
@@ -4176,7 +4175,7 @@ pub struct Light<'a> {
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct LightEnvironment<'a> {
-    pub _ambient: &'a str,
+    pub _ambient: LightColor,
     pub _ambienthdr: &'a str,
     pub _ambientscalehdr: u8,
     pub _light: LightColor,
@@ -4202,7 +4201,7 @@ pub struct LightSpot<'a> {
     #[serde(default)]
     pub _cone2: Option<u8>,
     #[serde(default)]
-    pub _constant_attn: Option<&'a str>,
+    pub _constant_attn: Option<f32>,
     #[serde(default)]
     pub _distance: Option<u16>,
     pub _exponent: f32,
@@ -4211,11 +4210,11 @@ pub struct LightSpot<'a> {
     #[serde(default)]
     pub _hardfalloff: Option<u16>,
     pub _inner_cone: u8,
-    pub _light: &'a str,
+    pub _light: LightColor,
     pub _lighthdr: &'a str,
     pub _lightscalehdr: f32,
     #[serde(default)]
-    pub _linear_attn: Option<&'a str>,
+    pub _linear_attn: Option<u8>,
     pub _quadratic_attn: u16,
     #[serde(default)]
     pub _zero_percent_distance: Option<u16>,
@@ -4883,12 +4882,12 @@ pub struct PointSpotlight<'a> {
     #[serde(default)]
     pub pitch: Option<f32>,
     pub renderamt: u8,
-    pub rendercolor: &'a str,
+    pub rendercolor: Vector,
     #[serde(default)]
     pub renderfx: Option<u8>,
     #[serde(default)]
     pub rendermode: Option<u8>,
-    pub spawnflags: &'a str,
+    pub spawnflags: u32,
     pub spotlightlength: f32,
     pub spotlightwidth: f32,
     #[serde(default)]
@@ -5077,7 +5076,7 @@ pub struct PropDynamic<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub maxdxlevel: bool,
-    pub minanimtime: &'a str,
+    pub minanimtime: u8,
     #[serde(default)]
     pub mindxlevel: Option<u8>,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -5086,7 +5085,7 @@ pub struct PropDynamic<'a> {
     #[serde(default)]
     pub model: Option<&'a str>,
     #[serde(default)]
-    pub modelscale: Option<&'a str>,
+    pub modelscale: Option<f32>,
     #[serde(default)]
     pub onanimationbegun: Option<&'a str>,
     #[serde(default)]
@@ -5124,8 +5123,8 @@ pub struct PropDynamic<'a> {
     #[serde(default)]
     pub shadowcastdist: bool,
     #[serde(default)]
-    pub skin: Option<&'a str>,
-    pub solid: &'a str,
+    pub skin: Option<u8>,
+    pub solid: u8,
     #[serde(default)]
     pub spawnflags: Option<u32>,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -5529,7 +5528,7 @@ pub struct PropSoccerBall<'a> {
 #[derive(Debug, Clone, Deserialize)]
 pub struct ShadowControl<'a> {
     pub angles: Angles,
-    pub color: &'a str,
+    pub color: Color,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub disableallshadows: bool,
@@ -6652,7 +6651,7 @@ pub struct TriggerHurt<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub damagemodel: bool,
-    pub damagetype: &'a str,
+    pub damagetype: f32,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub effects: bool,

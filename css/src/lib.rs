@@ -1,7 +1,6 @@
 use serde::Deserialize;
 use vbsp::deserialize_bool;
 use vbsp::{Angles, Color, LightColor, Negated, Vector};
-
 #[derive(Debug, Clone, Deserialize)]
 #[non_exhaustive]
 #[serde(tag = "classname")]
@@ -1039,7 +1038,7 @@ pub struct EnvSprite<'a> {
     #[serde(default)]
     pub parentname: Option<&'a str>,
     pub renderamt: u8,
-    pub rendercolor: &'a str,
+    pub rendercolor: Color,
     #[serde(default)]
     pub renderfx: Option<u8>,
     #[serde(default)]
@@ -2493,7 +2492,7 @@ pub struct Light<'a> {
     pub _fifty_percent_distance: Option<f32>,
     #[serde(default)]
     pub _hardfalloff: Option<u16>,
-    pub _light: &'a str,
+    pub _light: LightColor,
     #[serde(default)]
     pub _lighthdr: Option<&'a str>,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -2520,7 +2519,7 @@ pub struct Light<'a> {
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct LightEnvironment<'a> {
-    pub _ambient: &'a str,
+    pub _ambient: LightColor,
     #[serde(default)]
     pub _ambienthdr: Option<&'a str>,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -2536,7 +2535,7 @@ pub struct LightEnvironment<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub _lightscalehdr: bool,
-    pub angles: &'a str,
+    pub angles: Vector,
     pub origin: Vector,
     #[serde(default)]
     pub pitch: Option<i32>,
@@ -3053,7 +3052,7 @@ pub struct PointSpotlight<'a> {
     pub parentname: Option<&'a str>,
     #[serde(default)]
     pub renderamt: Option<u8>,
-    pub rendercolor: &'a str,
+    pub rendercolor: Color,
     #[serde(default)]
     pub renderfx: Option<u8>,
     #[serde(default)]
