@@ -1,6 +1,6 @@
 use serde::Deserialize;
-use vbsp::deserialize_bool;
-use vbsp::{Angles, Color, LightColor, Negated, Vector};
+use vbsp_common::deserialize_bool;
+use vbsp_common::{Angles, Color, LightColor, Negated, Vector};
 #[derive(Debug, Clone, Deserialize)]
 #[non_exhaustive]
 #[serde(tag = "classname")]

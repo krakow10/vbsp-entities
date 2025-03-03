@@ -10,4 +10,4 @@ readme = "README.md"
 
 [dependencies]
 serde = "1.0.218"
-vbsp = "0.7.0"
+vbsp-common = "0.1.0"
