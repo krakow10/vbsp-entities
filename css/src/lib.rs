@@ -6,7 +6,7 @@ pub use generated::*;
 impl<'a> AsPropPlacement<'a> for PropDynamic<'a> {
     fn as_prop_placement(&self) -> PropPlacement<'a> {
         PropPlacement {
-            model: self.model.unwrap_or_default(),
+            model: self.model,
             rotation: self.angles.as_quaternion(),
             scale: self.modelscale.unwrap_or(1.0),
             origin: self.origin,
