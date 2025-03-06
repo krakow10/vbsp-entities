@@ -1133,7 +1133,7 @@ pub struct EnvFogController<'a> {
     pub fogblend: bool,
     pub fogcolor: &'a str,
     pub fogcolor2: &'a str,
-    pub fogdir: Vector,
+    pub fogdir: Angles,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub fogenable: bool,
@@ -1812,7 +1812,7 @@ pub struct FuncBreakable<'a> {
     #[serde(default)]
     pub exploderadius: bool,
     pub explosion: u8,
-    pub gibdir: Vector,
+    pub gibdir: Angles,
     pub health: i32,
     pub material: u8,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -1932,7 +1932,7 @@ pub struct FuncButton<'a> {
     #[serde(default)]
     pub locked_sound: bool,
     pub model: &'a str,
-    pub movedir: Vector,
+    pub movedir: Angles,
     pub ondamaged: &'a str,
     #[serde(default)]
     pub onin: Option<&'a str>,
@@ -2092,7 +2092,7 @@ pub struct FuncDoor<'a> {
     #[serde(default)]
     pub mindxlevel: bool,
     pub model: &'a str,
-    pub movedir: Vector,
+    pub movedir: Angles,
     #[serde(default)]
     pub noise1: Option<&'a str>,
     #[serde(default)]
@@ -2389,7 +2389,7 @@ pub struct FuncMovelinear<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     pub disablereceiveshadows: bool,
     pub model: &'a str,
-    pub movedir: Vector,
+    pub movedir: Angles,
     pub movedistance: u16,
     #[serde(default)]
     pub onfullyclosed: Option<&'a str>,
@@ -2587,7 +2587,7 @@ pub struct FuncPhysbox<'a> {
     pub explosion: bool,
     #[serde(deserialize_with = "deserialize_bool")]
     pub forcetoenablemotion: bool,
-    pub gibdir: Vector,
+    pub gibdir: Angles,
     #[serde(deserialize_with = "deserialize_bool")]
     pub health: bool,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -2652,7 +2652,7 @@ pub struct FuncPhysboxMultiplayer<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub forcetoenablemotion: bool,
-    pub gibdir: Vector,
+    pub gibdir: Angles,
     #[serde(deserialize_with = "deserialize_bool")]
     pub health: bool,
     pub massscale: u8,
@@ -3107,7 +3107,7 @@ pub struct FuncWaterAnalog<'a> {
     #[serde(default)]
     pub effects: bool,
     pub model: &'a str,
-    pub movedir: Vector,
+    pub movedir: Angles,
     pub movedistance: u16,
     pub origin: Vector,
     pub renderamt: u8,
@@ -5545,7 +5545,7 @@ pub struct SkyCamera<'a> {
     pub fogblend: bool,
     pub fogcolor: &'a str,
     pub fogcolor2: &'a str,
-    pub fogdir: Vector,
+    pub fogdir: Angles,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub fogenable: bool,
@@ -6502,7 +6502,7 @@ pub struct TriggerApplyImpulse<'a> {
     #[serde(default)]
     pub filtername: Option<&'a str>,
     pub force: u16,
-    pub impulse_dir: Vector,
+    pub impulse_dir: Angles,
     pub model: &'a str,
     pub origin: Vector,
     pub spawnflags: u32,
@@ -6842,7 +6842,7 @@ pub struct TriggerPush<'a> {
     pub origin: Vector,
     #[serde(default)]
     pub parentname: Option<&'a str>,
-    pub pushdir: Vector,
+    pub pushdir: Angles,
     pub spawnflags: u32,
     pub speed: u16,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -7069,7 +7069,7 @@ pub struct Worldspawn<'a> {
     #[serde(default)]
     pub fogcolor2: Option<Color>,
     #[serde(default)]
-    pub fogdir: Option<Vector>,
+    pub fogdir: Option<Angles>,
     #[serde(default)]
     pub fogend: Option<f32>,
     #[serde(default)]
