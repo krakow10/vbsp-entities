@@ -1,7 +1,7 @@
 mod generated;
 
-use vbsp_common::{AsPropPlacement, PropPlacement};
 pub use generated::*;
+use vbsp_common::{AsPropPlacement, PropPlacement};
 
 impl<'a> AsPropPlacement<'a> for PropDynamic<'a> {
     fn as_prop_placement(&self) -> PropPlacement<'a> {
