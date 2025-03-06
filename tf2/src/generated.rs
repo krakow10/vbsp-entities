@@ -3312,7 +3312,7 @@ pub struct InfoNull<'a> {
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct InfoObserverPoint<'a> {
-    pub angles: Vector,
+    pub angles: Angles,
     #[serde(default)]
     pub associated_team_entity: Option<&'a str>,
     #[serde(deserialize_with = "deserialize_bool")]
