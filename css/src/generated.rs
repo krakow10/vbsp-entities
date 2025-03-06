@@ -727,7 +727,7 @@ pub struct EnvFogController<'a> {
     pub fogblend: bool,
     pub fogcolor: Color,
     pub fogcolor2: Color,
-    pub fogdir: Vector,
+    pub fogdir: Angles,
     #[serde(deserialize_with = "deserialize_bool")]
     pub fogenable: bool,
     pub fogend: f32,
@@ -1281,7 +1281,7 @@ pub struct FuncBreakable<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub explosion: bool,
-    pub gibdir: Vector,
+    pub gibdir: Angles,
     pub health: u32,
     #[serde(default)]
     pub material: Option<u8>,
@@ -1337,7 +1337,7 @@ pub struct FuncBreakableSurf<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     pub explosion: bool,
     pub fragility: u8,
-    pub gibdir: Vector,
+    pub gibdir: Angles,
     pub health: u8,
     pub lowerleft: Vector,
     pub lowerright: Vector,
@@ -1434,7 +1434,7 @@ pub struct FuncButton<'a> {
     #[serde(default)]
     pub locked_sound: Option<u8>,
     pub model: &'a str,
-    pub movedir: Vector,
+    pub movedir: Angles,
     #[serde(default)]
     pub ondamaged: Option<&'a str>,
     #[serde(default)]
@@ -1491,7 +1491,7 @@ pub struct FuncConveyor<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     pub disableshadows: bool,
     pub model: &'a str,
-    pub movedir: Vector,
+    pub movedir: Angles,
     pub renderamt: u8,
     pub rendercolor: Color,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -1531,7 +1531,7 @@ pub struct FuncDoor<'a> {
     #[serde(default)]
     pub loopmovesound: bool,
     pub model: &'a str,
-    pub movedir: Vector,
+    pub movedir: Angles,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub no_decomp: bool,
@@ -1788,7 +1788,7 @@ pub struct FuncMovelinear<'a> {
     #[serde(default)]
     pub disableshadows: bool,
     pub model: &'a str,
-    pub movedir: Vector,
+    pub movedir: Angles,
     pub movedistance: u16,
     #[serde(default)]
     pub onfullyclosed: Option<&'a str>,
@@ -1849,7 +1849,7 @@ pub struct FuncPhysbox<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub forcetoenablemotion: bool,
-    pub gibdir: Vector,
+    pub gibdir: Angles,
     #[serde(default)]
     pub health: Option<u16>,
     #[serde(default)]
@@ -1910,7 +1910,7 @@ pub struct FuncPhysboxMultiplayer<'a> {
     pub explosion: bool,
     #[serde(deserialize_with = "deserialize_bool")]
     pub forcetoenablemotion: bool,
-    pub gibdir: Vector,
+    pub gibdir: Angles,
     pub health: u8,
     pub massscale: f32,
     pub material: u8,
@@ -2158,7 +2158,7 @@ pub struct FuncWaterAnalog<'a> {
     pub disableshadows: bool,
     pub model: &'a str,
     #[serde(default)]
-    pub movedir: Option<Vector>,
+    pub movedir: Option<Angles>,
     #[serde(default)]
     pub movedistance: Option<u8>,
     pub origin: Vector,
@@ -2535,7 +2535,7 @@ pub struct LightEnvironment<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub _lightscalehdr: bool,
-    pub angles: Vector,
+    pub angles: Angles,
     pub origin: Vector,
     #[serde(default)]
     pub pitch: Option<i32>,
@@ -3676,7 +3676,7 @@ pub struct SkyCamera {
     pub fogblend: bool,
     pub fogcolor: Color,
     pub fogcolor2: Color,
-    pub fogdir: Vector,
+    pub fogdir: Angles,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub fogenable: bool,
@@ -3817,7 +3817,7 @@ pub struct TriggerPush<'a> {
     pub origin: Vector,
     #[serde(default)]
     pub parentname: Option<&'a str>,
-    pub pushdir: Vector,
+    pub pushdir: Angles,
     pub spawnflags: u32,
     pub speed: f32,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -4498,7 +4498,7 @@ pub struct Worldspawn<'a> {
     #[serde(default)]
     pub fogcolor2: Option<Color>,
     #[serde(default)]
-    pub fogdir: Option<Vector>,
+    pub fogdir: Option<Angles>,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub fogenable: bool,
