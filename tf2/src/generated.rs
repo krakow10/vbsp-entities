@@ -751,26 +751,21 @@ pub enum Entity<'a> {
 pub struct AmbientGeneric<'a> {
     #[serde(default)]
     pub angles: Option<Angles>,
-    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub cspinup: bool,
+    pub cspinup: Option<i32>,
     #[serde(default)]
-    pub fadeinsecs: Option<f32>,
+    pub fadeinsecs: Option<i32>,
     #[serde(default)]
-    pub fadeoutsecs: Option<f32>,
+    pub fadeoutsecs: Option<i32>,
     pub health: f32,
-    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub lfomodpitch: bool,
-    #[serde(deserialize_with = "deserialize_bool")]
+    pub lfomodpitch: Option<i32>,
     #[serde(default)]
-    pub lfomodvol: bool,
-    #[serde(deserialize_with = "deserialize_bool")]
+    pub lfomodvol: Option<i32>,
     #[serde(default)]
-    pub lforate: bool,
-    #[serde(deserialize_with = "deserialize_bool")]
+    pub lforate: Option<i32>,
     #[serde(default)]
-    pub lfotype: bool,
+    pub lfotype: Option<i32>,
     #[serde(default)]
     pub message: Option<&'a str>,
     #[serde(default)]
@@ -778,33 +773,34 @@ pub struct AmbientGeneric<'a> {
     pub origin: Vector,
     #[serde(default)]
     pub parentname: Option<&'a str>,
-    pub pitch: u8,
-    pub pitchstart: u8,
+    pub pitch: i32,
+    pub pitchstart: i32,
     #[serde(default)]
-    pub preset: Option<u8>,
-    pub radius: i32,
+    pub preset: Option<i32>,
+    pub radius: f32,
     #[serde(default)]
     pub sourceentityname: Option<&'a str>,
     pub spawnflags: u32,
     #[serde(default)]
-    pub spindown: Option<u8>,
+    pub spindown: Option<i32>,
     #[serde(default)]
-    pub spinup: Option<u8>,
+    pub spinup: Option<i32>,
     #[serde(default)]
     pub targetname: Option<&'a str>,
     #[serde(default)]
-    pub volstart: Option<f32>,
+    pub volstart: Option<i32>,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct BaseBoss<'a> {
     pub angles: Angles,
-    pub health: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub health: bool,
     pub model: &'a str,
     pub origin: Vector,
     #[serde(deserialize_with = "deserialize_bool")]
     pub playbackrate: bool,
     pub skin: u8,
-    pub speed: u8,
+    pub speed: f32,
     pub targetname: &'a str,
     pub vscripts: &'a str,
 }
@@ -812,7 +808,7 @@ pub struct BaseBoss<'a> {
 pub struct BotActionPoint<'a> {
     #[serde(default)]
     pub command: Option<&'a str>,
-    pub desired_distance: u8,
+    pub desired_distance: f32,
     #[serde(default)]
     pub next_action_point: Option<&'a str>,
     #[serde(default)]
@@ -830,7 +826,8 @@ pub struct BotGenerator<'a> {
     pub actionondeath: bool,
     pub angles: Angles,
     pub class: &'a str,
-    pub count: i32,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub count: bool,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub difficulty: bool,
@@ -838,7 +835,7 @@ pub struct BotGenerator<'a> {
     pub disabledodge: bool,
     #[serde(default)]
     pub initial_command: Option<&'a str>,
-    pub interval: u8,
+    pub interval: f32,
     pub maxactive: u8,
     #[serde(default)]
     pub onbotkilled: Option<&'a str>,
@@ -1001,16 +998,18 @@ pub struct EntitySpawnManager<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub drop_to_ground: bool,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub entity_count: Option<u8>,
+    pub entity_count: bool,
     #[serde(default)]
     pub entity_name: Option<&'a str>,
     pub origin: Vector,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub random_rotation: bool,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub respawn_time: Option<u8>,
+    pub respawn_time: bool,
     #[serde(default)]
     pub spawnflags: Option<u32>,
     #[serde(default)]
@@ -1028,11 +1027,11 @@ pub struct EntitySpawnPoint<'a> {
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvBeam<'a> {
     pub boltwidth: u8,
-    #[serde(deserialize_with = "deserialize_bool")]
-    pub damage: bool,
+    pub damage: f32,
     pub decalname: &'a str,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub dissolvetype: Option<i32>,
+    pub dissolvetype: bool,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub effects: bool,
@@ -1065,9 +1064,11 @@ pub struct EnvBeam<'a> {
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvBubbles<'a> {
-    pub current: u8,
-    pub density: u8,
-    pub frequency: u8,
+    pub current: f32,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub density: bool,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub frequency: bool,
     pub model: &'a str,
     pub spawnflags: u32,
 }
@@ -1127,13 +1128,13 @@ pub struct EnvFogController<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub disablex360: bool,
-    pub farz: i32,
+    pub farz: f32,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub fogblend: bool,
-    pub fogcolor: &'a str,
-    pub fogcolor2: &'a str,
-    pub fogdir: Angles,
+    pub fogcolor: Color,
+    pub fogcolor2: Color,
+    pub fogdir: Vector,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub fogenable: bool,
@@ -1184,9 +1185,8 @@ pub struct EnvGlow<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub effects: bool,
-    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub frame: bool,
+    pub frame: Option<f32>,
     pub framerate: f32,
     pub glowproxysize: u8,
     pub hdrcolorscale: f32,
@@ -1214,16 +1214,16 @@ pub struct EnvGlow<'a> {
 pub struct EnvLaser<'a> {
     #[serde(default)]
     pub angles: Option<Angles>,
-    pub damage: u16,
-    pub dissolvetype: &'a str,
+    pub damage: f32,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub dissolvetype: bool,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub effects: bool,
     #[serde(default)]
     pub endsprite: Option<&'a str>,
-    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub framestart: bool,
+    pub framestart: Option<f32>,
     #[serde(default)]
     pub hdrcolorscale: Option<f32>,
     pub lasertarget: &'a str,
@@ -1262,7 +1262,7 @@ pub struct EnvLightglow<'a> {
     #[serde(default)]
     pub parentname: Option<&'a str>,
     #[serde(default)]
-    pub renderamt: Option<u8>,
+    pub renderamt: Option<i32>,
     pub rendercolor: Color,
     #[serde(default)]
     pub spawnflags: Option<u32>,
@@ -1272,12 +1272,11 @@ pub struct EnvLightglow<'a> {
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvPhysexplosion<'a> {
-    pub inner_radius: u16,
-    pub magnitude: u32,
+    pub inner_radius: f32,
+    pub magnitude: f32,
     pub origin: Vector,
-    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub radius: bool,
+    pub radius: Option<f32>,
     pub spawnflags: u32,
     pub targetname: &'a str,
 }
@@ -1327,28 +1326,24 @@ pub struct EnvShake<'a> {
     pub origin: Vector,
     #[serde(default)]
     pub parentname: Option<&'a str>,
-    pub radius: i32,
+    pub radius: f32,
     pub spawnflags: u32,
     pub targetname: &'a str,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvShooter<'a> {
     pub angles: Angles,
-    #[serde(deserialize_with = "deserialize_bool")]
-    pub delay: bool,
+    pub delay: f32,
     #[serde(deserialize_with = "deserialize_bool")]
     pub disablereceiveshadows: bool,
-    pub gibangles: Angles,
-    #[serde(deserialize_with = "deserialize_bool")]
-    pub gibanglevelocity: bool,
-    #[serde(deserialize_with = "deserialize_bool")]
-    pub gibgravityscale: bool,
+    pub gibangles: Vector,
+    pub gibanglevelocity: f32,
+    pub gibgravityscale: f32,
     pub m_flgiblife: u8,
     pub m_flvariance: f32,
     pub m_flvelocity: u16,
     pub m_igibs: u8,
-    #[serde(deserialize_with = "deserialize_bool")]
-    pub massoverride: bool,
+    pub massoverride: f32,
     #[serde(deserialize_with = "deserialize_bool")]
     pub nogibshadows: bool,
     pub origin: Vector,
@@ -1415,7 +1410,7 @@ pub struct EnvSoundscape<'a> {
     pub position6: Option<&'a str>,
     #[serde(default)]
     pub position7: Option<&'a str>,
-    pub radius: i32,
+    pub radius: f32,
     pub soundscape: &'a str,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
@@ -1430,7 +1425,7 @@ pub struct EnvSoundscapeProxy<'a> {
     #[serde(default)]
     pub mainsoundscapename: Option<&'a str>,
     pub origin: Vector,
-    pub radius: i32,
+    pub radius: f32,
     #[serde(default)]
     pub sides: Option<&'a str>,
     #[serde(default)]
@@ -1453,7 +1448,7 @@ pub struct EnvSoundscapeTriggerable<'a> {
     pub position5: Option<&'a str>,
     #[serde(default)]
     pub position6: Option<&'a str>,
-    pub radius: i32,
+    pub radius: f32,
     pub soundscape: &'a str,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
@@ -1495,9 +1490,8 @@ pub struct EnvSprite<'a> {
     pub fademaxdist: Option<u16>,
     #[serde(default)]
     pub fademindist: Option<u16>,
-    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub frame: bool,
+    pub frame: Option<f32>,
     pub framerate: f32,
     pub glowproxysize: f32,
     pub hdrcolorscale: f32,
@@ -1564,11 +1558,13 @@ pub struct EnvSun<'a> {
     pub origin: Vector,
     pub overlaycolor: Color,
     pub overlaymaterial: &'a str,
-    pub overlaysize: i32,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub overlaysize: bool,
     #[serde(default)]
     pub pitch: Option<f32>,
     pub rendercolor: Color,
-    pub size: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub size: bool,
     #[serde(deserialize_with = "deserialize_bool")]
     pub use_angles: bool,
 }
@@ -1590,14 +1586,19 @@ pub struct EnvTonemapController<'a> {
 #[derive(Debug, Clone, Deserialize)]
 pub struct EnvWind<'a> {
     pub angles: Angles,
-    pub gustdirchange: u8,
-    pub gustduration: u8,
-    pub maxgust: u16,
-    pub maxgustdelay: u16,
-    pub maxwind: u16,
-    pub mingust: u8,
-    pub mingustdelay: u16,
-    pub minwind: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub gustdirchange: bool,
+    pub gustduration: f32,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub maxgust: bool,
+    pub maxgustdelay: f32,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub maxwind: bool,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub mingust: bool,
+    pub mingustdelay: f32,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub minwind: bool,
     pub origin: Vector,
     #[serde(default)]
     pub targetname: Option<&'a str>,
@@ -1646,7 +1647,8 @@ pub struct FilterActivatorName<'a> {
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct FilterActivatorTeam<'a> {
-    pub filterteam: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub filterteam: bool,
     #[serde(deserialize_with = "deserialize_bool")]
     pub negated: bool,
     pub origin: Vector,
@@ -1680,7 +1682,8 @@ pub struct FilterBase<'a> {
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct FilterDamageType<'a> {
-    pub damagetype: u16,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub damagetype: bool,
     pub negated: Negated,
     pub origin: Vector,
     pub targetname: &'a str,
@@ -1718,11 +1721,13 @@ pub struct FilterTfClass<'a> {
     pub negated: Negated,
     pub origin: Vector,
     pub targetname: &'a str,
-    pub tfclass: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub tfclass: bool,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct FilterTfCondition<'a> {
-    pub condition: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub condition: bool,
     #[serde(default)]
     pub negated: Option<Negated>,
     pub origin: Vector,
@@ -1760,7 +1765,8 @@ pub struct FuncAreaportal<'a> {
     pub angles: Option<Angles>,
     #[serde(default)]
     pub origin: Option<Vector>,
-    pub portalnumber: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub portalnumber: bool,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub portalversion: bool,
@@ -1781,7 +1787,8 @@ pub struct FuncAreaportalwindow<'a> {
     pub fadestartdist: u16,
     #[serde(default)]
     pub origin: Option<Vector>,
-    pub portalnumber: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub portalnumber: bool,
     #[serde(deserialize_with = "deserialize_bool")]
     pub portalversion: bool,
     #[serde(default)]
@@ -1811,10 +1818,11 @@ pub struct FuncBreakable<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub exploderadius: bool,
-    pub explosion: u8,
-    pub gibdir: Angles,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub explosion: bool,
+    pub gibdir: Vector,
     pub health: i32,
-    pub material: u8,
+    pub material: i32,
     #[serde(deserialize_with = "deserialize_bool")]
     pub minhealthdmg: bool,
     pub model: &'a str,
@@ -1829,16 +1837,15 @@ pub struct FuncBreakable<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub pressuredelay: bool,
-    pub propdata: u8,
-    pub renderamt: u8,
+    pub propdata: i32,
+    pub renderamt: i32,
     pub rendercolor: Color,
     #[serde(deserialize_with = "deserialize_bool")]
     pub renderfx: bool,
     pub rendermode: u8,
     pub spawnflags: u32,
-    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub spawnobject: bool,
+    pub spawnobject: Option<i32>,
     #[serde(default)]
     pub targetname: Option<&'a str>,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -1882,7 +1889,7 @@ pub struct FuncBrush<'a> {
     pub origin: Vector,
     #[serde(default)]
     pub parentname: Option<&'a str>,
-    pub renderamt: u8,
+    pub renderamt: i32,
     pub rendercolor: Color,
     #[serde(default)]
     pub renderfx: Option<u8>,
@@ -1932,7 +1939,7 @@ pub struct FuncButton<'a> {
     #[serde(default)]
     pub locked_sound: bool,
     pub model: &'a str,
-    pub movedir: Angles,
+    pub movedir: Vector,
     pub ondamaged: &'a str,
     #[serde(default)]
     pub onin: Option<&'a str>,
@@ -1947,8 +1954,9 @@ pub struct FuncButton<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     pub renderfx: bool,
     pub rendermode: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub sounds: Option<u8>,
+    pub sounds: bool,
     pub spawnflags: u32,
     pub speed: u16,
     #[serde(default)]
@@ -2012,7 +2020,7 @@ pub struct FuncClipVphysics<'a> {
     #[serde(default)]
     pub origin: Option<Vector>,
     #[serde(default)]
-    pub renderamt: Option<u8>,
+    pub renderamt: Option<i32>,
     #[serde(default)]
     pub rendercolor: Option<Color>,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -2064,7 +2072,7 @@ pub struct FuncDoor<'a> {
     #[serde(default)]
     pub disableshadows: bool,
     #[serde(default)]
-    pub dmg: Option<u32>,
+    pub dmg: Option<f32>,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub effects: bool,
@@ -2092,7 +2100,7 @@ pub struct FuncDoor<'a> {
     #[serde(default)]
     pub mindxlevel: bool,
     pub model: &'a str,
-    pub movedir: Angles,
+    pub movedir: Vector,
     #[serde(default)]
     pub noise1: Option<&'a str>,
     #[serde(default)]
@@ -2147,7 +2155,7 @@ pub struct FuncDoorRotating<'a> {
     #[serde(default)]
     pub disableshadows: bool,
     pub distance: f32,
-    pub dmg: u32,
+    pub dmg: f32,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub effects: bool,
@@ -2251,14 +2259,15 @@ pub struct FuncDustmotes<'a> {
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncFishPool<'a> {
-    pub fish_count: u8,
+    pub fish_count: i32,
     pub max_range: u8,
     pub model: &'a str,
     pub origin: Vector,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncFlagAlert<'a> {
-    pub alert_delay: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub alert_delay: bool,
     pub model: &'a str,
     #[serde(deserialize_with = "deserialize_bool")]
     pub playsound: bool,
@@ -2313,7 +2322,7 @@ pub struct FuncIllusionary<'a> {
     #[serde(default)]
     pub model: Option<&'a str>,
     pub origin: Vector,
-    pub renderamt: u8,
+    pub renderamt: i32,
     pub rendercolor: Color,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
@@ -2341,7 +2350,7 @@ pub struct FuncLod<'a> {
     #[serde(default)]
     pub origin: Option<Vector>,
     #[serde(default)]
-    pub renderamt: Option<u8>,
+    pub renderamt: Option<i32>,
     #[serde(default)]
     pub rendercolor: Option<Color>,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -2389,7 +2398,7 @@ pub struct FuncMovelinear<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     pub disablereceiveshadows: bool,
     pub model: &'a str,
-    pub movedir: Angles,
+    pub movedir: Vector,
     pub movedistance: u16,
     #[serde(default)]
     pub onfullyclosed: Option<&'a str>,
@@ -2426,7 +2435,8 @@ pub struct FuncNavAvoid<'a> {
     pub tags: Option<&'a str>,
     #[serde(default)]
     pub targetname: Option<&'a str>,
-    pub team: i32,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub team: bool,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncNavBlocker<'a> {
@@ -2453,7 +2463,8 @@ pub struct FuncNavPrefer<'a> {
     pub tags: &'a str,
     #[serde(default)]
     pub targetname: Option<&'a str>,
-    pub team: i32,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub team: bool,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncNavPrerequisite<'a> {
@@ -2532,7 +2543,8 @@ pub struct FuncOccluder<'a> {
     #[serde(default)]
     pub angles: Option<Angles>,
     pub model: &'a str,
-    pub occludernumber: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub occludernumber: bool,
     #[serde(default)]
     pub origin: Option<Vector>,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -2546,7 +2558,8 @@ pub struct FuncPasstimeGoal<'a> {
     pub onscoreblu: &'a str,
     pub onscorered: &'a str,
     pub origin: Vector,
-    pub points: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub points: bool,
     pub spawnflags: u32,
     #[serde(deserialize_with = "deserialize_bool")]
     pub startdisabled: bool,
@@ -2585,15 +2598,13 @@ pub struct FuncPhysbox<'a> {
     pub exploderadius: bool,
     #[serde(deserialize_with = "deserialize_bool")]
     pub explosion: bool,
-    #[serde(deserialize_with = "deserialize_bool")]
-    pub forcetoenablemotion: bool,
-    pub gibdir: Angles,
+    pub forcetoenablemotion: f32,
+    pub gibdir: Vector,
     #[serde(deserialize_with = "deserialize_bool")]
     pub health: bool,
     #[serde(deserialize_with = "deserialize_bool")]
     pub massscale: bool,
-    #[serde(deserialize_with = "deserialize_bool")]
-    pub material: bool,
+    pub material: i32,
     pub model: &'a str,
     #[serde(deserialize_with = "deserialize_bool")]
     pub nodamageforces: bool,
@@ -2604,11 +2615,10 @@ pub struct FuncPhysbox<'a> {
     pub performancemode: bool,
     #[serde(default)]
     pub physdamagescale: Option<f32>,
-    pub preferredcarryangles: Angles,
+    pub preferredcarryangles: Vector,
     #[serde(deserialize_with = "deserialize_bool")]
     pub pressuredelay: bool,
-    #[serde(deserialize_with = "deserialize_bool")]
-    pub propdata: bool,
+    pub propdata: i32,
     pub renderamt: u8,
     pub rendercolor: Color,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -2616,8 +2626,7 @@ pub struct FuncPhysbox<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     pub rendermode: bool,
     pub spawnflags: u32,
-    #[serde(deserialize_with = "deserialize_bool")]
-    pub spawnobject: bool,
+    pub spawnobject: i32,
     pub targetname: &'a str,
 }
 #[derive(Debug, Clone, Deserialize)]
@@ -2649,9 +2658,8 @@ pub struct FuncPhysboxMultiplayer<'a> {
     pub exploderadius: bool,
     #[serde(deserialize_with = "deserialize_bool")]
     pub explosion: bool,
-    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub forcetoenablemotion: bool,
+    pub forcetoenablemotion: Option<f32>,
     pub gibdir: Angles,
     #[serde(deserialize_with = "deserialize_bool")]
     pub health: bool,
@@ -2672,7 +2680,7 @@ pub struct FuncPhysboxMultiplayer<'a> {
     pub performancemode: bool,
     #[serde(default)]
     pub physdamagescale: Option<f32>,
-    pub preferredcarryangles: Angles,
+    pub preferredcarryangles: Vector,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub pressuredelay: bool,
@@ -2711,8 +2719,9 @@ pub struct FuncPowerupvolume<'a> {
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncPrecipitation<'a> {
     pub model: &'a str,
-    pub preciptype: u8,
-    pub renderamt: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub preciptype: bool,
+    pub renderamt: i32,
     pub rendercolor: Color,
     #[serde(default)]
     pub targetname: Option<&'a str>,
@@ -2853,7 +2862,7 @@ pub struct FuncRotating<'a> {
     #[serde(default)]
     pub disableshadows: bool,
     #[serde(default)]
-    pub dmg: Option<u8>,
+    pub dmg: Option<f32>,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub effects: bool,
@@ -2865,7 +2874,7 @@ pub struct FuncRotating<'a> {
     pub origin: Vector,
     #[serde(default)]
     pub parentname: Option<&'a str>,
-    pub renderamt: u8,
+    pub renderamt: i32,
     pub rendercolor: Color,
     #[serde(deserialize_with = "deserialize_bool")]
     pub renderfx: bool,
@@ -2904,9 +2913,10 @@ pub struct FuncSmokevolume<'a> {
 pub struct FuncSuggestedBuild<'a> {
     #[serde(default)]
     pub face_entity: Option<&'a str>,
-    pub face_entity_fov: u8,
+    pub face_entity_fov: f32,
     pub model: &'a str,
-    pub object_type: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub object_type: bool,
     #[serde(default)]
     pub onbuildingupgraded: Option<&'a str>,
     pub onbuildinsidearea: &'a str,
@@ -2921,15 +2931,14 @@ pub struct FuncSuggestedBuild<'a> {
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncTanktrain<'a> {
-    #[serde(deserialize_with = "deserialize_bool")]
-    pub bank: bool,
+    pub bank: f32,
     #[serde(deserialize_with = "deserialize_bool")]
     pub disablereceiveshadows: bool,
     #[serde(deserialize_with = "deserialize_bool")]
     pub disableshadows: bool,
-    pub dmg: u16,
+    pub dmg: f32,
     pub health: u32,
-    pub height: u8,
+    pub height: f32,
     pub model: &'a str,
     pub movesoundmaxpitch: u8,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -2947,12 +2956,13 @@ pub struct FuncTanktrain<'a> {
     pub rendermode: u8,
     pub spawnflags: u32,
     pub speed: u16,
-    pub startspeed: u16,
+    pub startspeed: f32,
     pub target: &'a str,
     pub targetname: &'a str,
-    pub velocitytype: u8,
-    pub volume: u8,
-    pub wheels: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub velocitytype: bool,
+    pub volume: i32,
+    pub wheels: f32,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncTfbotHint<'a> {
@@ -2964,7 +2974,8 @@ pub struct FuncTfbotHint<'a> {
     pub startdisabled: bool,
     #[serde(default)]
     pub targetname: Option<&'a str>,
-    pub team: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub team: bool,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncTracktrain<'a> {
@@ -2973,7 +2984,7 @@ pub struct FuncTracktrain<'a> {
     pub _minlight: bool,
     #[serde(default)]
     pub angles: Option<Angles>,
-    pub bank: u8,
+    pub bank: f32,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub disablereceiveshadows: bool,
@@ -2981,7 +2992,7 @@ pub struct FuncTracktrain<'a> {
     #[serde(default)]
     pub disableshadows: bool,
     #[serde(default)]
-    pub dmg: Option<u32>,
+    pub dmg: Option<f32>,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub effects: bool,
@@ -3020,9 +3031,10 @@ pub struct FuncTracktrain<'a> {
     pub onuser3: Option<&'a str>,
     #[serde(default)]
     pub onuser4: Option<&'a str>,
-    pub orientationtype: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub orientationtype: bool,
     pub origin: Vector,
-    pub renderamt: u8,
+    pub renderamt: i32,
     pub rendercolor: Color,
     #[serde(deserialize_with = "deserialize_bool")]
     pub renderfx: bool,
@@ -3031,7 +3043,7 @@ pub struct FuncTracktrain<'a> {
     pub speed: u8,
     #[serde(default)]
     pub startsound: Option<&'a str>,
-    pub startspeed: u16,
+    pub startspeed: f32,
     #[serde(default)]
     pub stopsound: Option<&'a str>,
     #[serde(default)]
@@ -3040,12 +3052,13 @@ pub struct FuncTracktrain<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub texframeindex: bool,
-    pub velocitytype: u8,
-    pub volume: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub velocitytype: bool,
+    pub volume: i32,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub vrad_brush_cast_shadows: bool,
-    pub wheels: u16,
+    pub wheels: f32,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct FuncUpgradestation<'a> {
@@ -3071,7 +3084,7 @@ pub struct FuncWall<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     pub disableshadows: bool,
     pub model: &'a str,
-    pub renderamt: u8,
+    pub renderamt: i32,
     pub rendercolor: Color,
     #[serde(deserialize_with = "deserialize_bool")]
     pub renderfx: bool,
@@ -3107,7 +3120,7 @@ pub struct FuncWaterAnalog<'a> {
     #[serde(default)]
     pub effects: bool,
     pub model: &'a str,
-    pub movedir: Angles,
+    pub movedir: Vector,
     pub movedistance: u16,
     pub origin: Vector,
     pub renderamt: u8,
@@ -3150,20 +3163,22 @@ pub struct GameForcerespawn<'a> {
 #[derive(Debug, Clone, Deserialize)]
 pub struct GameIntroViewpoint<'a> {
     pub angles: Angles,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub event_data_int: Option<u8>,
-    pub event_delay: u8,
+    pub event_data_int: bool,
+    pub event_delay: f32,
     #[serde(default)]
     pub event_to_fire: Option<&'a str>,
     #[serde(default)]
-    pub fov: Option<u8>,
+    pub fov: Option<f32>,
     #[serde(default)]
     pub hint_message: Option<&'a str>,
     pub origin: Vector,
-    pub step_number: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub step_number: bool,
     #[serde(default)]
     pub teamnum: Option<u8>,
-    pub time_delay: u8,
+    pub time_delay: f32,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct GameRoundWin<'a> {
@@ -3181,15 +3196,18 @@ pub struct GameRoundWin<'a> {
     pub switch_teams: bool,
     pub targetname: &'a str,
     pub teamnum: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub win_reason: Option<u8>,
+    pub win_reason: bool,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct GameText<'a> {
-    pub channel: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub channel: bool,
     pub color: Color,
     pub color2: Color,
-    pub effect: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub effect: bool,
     pub fadein: f32,
     pub fadeout: f32,
     pub fxtime: f32,
@@ -3204,10 +3222,12 @@ pub struct GameText<'a> {
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct GameTextTf<'a> {
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub background: Option<u8>,
+    pub background: bool,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub display_to_team: Option<u8>,
+    pub display_to_team: bool,
     #[serde(default)]
     pub icon: Option<&'a str>,
     pub message: &'a str,
@@ -3319,7 +3339,7 @@ pub struct InfoObserverPoint<'a> {
     #[serde(default)]
     pub defaultwelcome: bool,
     #[serde(default)]
-    pub fov: Option<u8>,
+    pub fov: Option<f32>,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub match_summary: bool,
@@ -3493,7 +3513,8 @@ pub struct InfoPowerupSpawn {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub startdisabled: bool,
-    pub team: i32,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub team: bool,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct InfoTarget<'a> {
@@ -4069,8 +4090,9 @@ pub struct ItemTeamflag<'a> {
     pub targetname: Option<&'a str>,
     #[serde(default)]
     pub teamnum: Option<u8>,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub trail_effect: Option<u8>,
+    pub trail_effect: bool,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub visiblewhendisabled: bool,
@@ -4151,8 +4173,9 @@ pub struct Light<'a> {
     pub basisu: Option<Vector>,
     #[serde(default)]
     pub basisv: Option<Vector>,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub defaultstyle: Option<u8>,
+    pub defaultstyle: bool,
     #[serde(default)]
     pub linedivider1: Option<&'a str>,
     pub origin: Vector,
@@ -4160,8 +4183,9 @@ pub struct Light<'a> {
     pub pattern: Option<&'a str>,
     #[serde(default)]
     pub spawnflags: Option<u32>,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub style: Option<u8>,
+    pub style: bool,
     #[serde(default)]
     pub targetname: Option<&'a str>,
     #[serde(default)]
@@ -4186,7 +4210,7 @@ pub struct LightEnvironment<'a> {
     #[serde(default)]
     pub defaultstyle: bool,
     pub origin: Vector,
-    pub pitch: i32,
+    pub pitch: Angles,
     #[serde(default)]
     pub spawnflags: Option<u32>,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -4221,8 +4245,9 @@ pub struct LightSpot<'a> {
     pub angles: Angles,
     #[serde(default)]
     pub comment: Option<&'a str>,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub defaultstyle: Option<u8>,
+    pub defaultstyle: bool,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub fademaxdist: bool,
@@ -4234,11 +4259,12 @@ pub struct LightSpot<'a> {
     #[serde(default)]
     pub pattern: Option<&'a str>,
     #[serde(default)]
-    pub pitch: Option<f32>,
+    pub pitch: Option<Angles>,
     #[serde(default)]
     pub spawnflags: Option<u32>,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub style: Option<u8>,
+    pub style: bool,
     #[serde(default)]
     pub targetname: Option<&'a str>,
 }
@@ -4499,9 +4525,9 @@ pub struct MaterialModifyControl {
 #[derive(Debug, Clone, Deserialize)]
 pub struct MathCounter<'a> {
     #[serde(default)]
-    pub max: Option<u8>,
+    pub max: Option<f32>,
     #[serde(default)]
-    pub min: Option<u8>,
+    pub min: Option<f32>,
     #[serde(default)]
     pub ongetvalue: Option<&'a str>,
     pub onhitmax: &'a str,
@@ -4523,11 +4549,11 @@ pub struct MathCounter<'a> {
 pub struct MathRemap<'a> {
     #[serde(default)]
     pub angles: Option<Angles>,
-    pub in1: i32,
-    pub in2: u8,
+    pub in1: f32,
+    pub in2: f32,
     pub origin: Vector,
-    pub out1: i32,
-    pub out2: u8,
+    pub out1: f32,
+    pub out2: f32,
     pub outvalue: &'a str,
     pub spawnflags: u32,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -4561,7 +4587,7 @@ pub struct MomentaryRotButton<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     pub renderfx: bool,
     pub rendermode: u8,
-    pub returnspeed: u8,
+    pub returnspeed: f32,
     #[serde(deserialize_with = "deserialize_bool")]
     pub solidbsp: bool,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -4619,7 +4645,8 @@ pub struct MoveRope<'a> {
 #[derive(Debug, Clone, Deserialize)]
 pub struct ObjDispenser<'a> {
     pub angles: Angles,
-    pub defaultupgrade: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub defaultupgrade: bool,
     pub origin: Vector,
     pub spawnflags: u32,
     pub targetname: &'a str,
@@ -4628,7 +4655,8 @@ pub struct ObjDispenser<'a> {
 #[derive(Debug, Clone, Deserialize)]
 pub struct ObjSentrygun<'a> {
     pub angles: Angles,
-    pub defaultupgrade: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub defaultupgrade: bool,
     pub ondestroyed: &'a str,
     pub origin: Vector,
     pub spawnflags: u32,
@@ -4638,7 +4666,8 @@ pub struct ObjSentrygun<'a> {
 #[derive(Debug, Clone, Deserialize)]
 pub struct ObjTeleporter<'a> {
     pub angles: Angles,
-    pub defaultupgrade: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub defaultupgrade: bool,
     pub matchingteleporter: &'a str,
     pub origin: Vector,
     pub spawnflags: u32,
@@ -4648,9 +4677,10 @@ pub struct ObjTeleporter<'a> {
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct PasstimeLogic<'a> {
-    pub ball_spawn_countdown: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub ball_spawn_countdown: bool,
     #[serde(default)]
-    pub max_pass_range: Option<u16>,
+    pub max_pass_range: Option<f32>,
     #[serde(deserialize_with = "deserialize_bool")]
     pub num_sections: bool,
     pub onballfree: &'a str,
@@ -4674,9 +4704,8 @@ pub struct PathCorner<'a> {
     #[serde(default)]
     pub speed: bool,
     pub targetname: &'a str,
-    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub wait: bool,
+    pub wait: Option<f32>,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub yaw_speed: bool,
@@ -4694,13 +4723,13 @@ pub struct PathTrack<'a> {
     pub onpass: Option<&'a str>,
     #[serde(default)]
     pub onteleport: Option<&'a str>,
-    pub orientationtype: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub orientationtype: bool,
     pub origin: Vector,
     #[serde(default)]
     pub parentname: Option<&'a str>,
-    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub radius: bool,
+    pub radius: Option<f32>,
     #[serde(default)]
     pub sides: Option<&'a str>,
     #[serde(default)]
@@ -4717,26 +4746,22 @@ pub struct PhysConstraint<'a> {
     pub angles: Option<Angles>,
     pub attach1: &'a str,
     pub attach2: &'a str,
-    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub forcelimit: bool,
+    pub forcelimit: Option<f32>,
     pub origin: Vector,
     pub spawnflags: u32,
     pub targetname: &'a str,
-    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub teleportfollowdistance: bool,
-    #[serde(deserialize_with = "deserialize_bool")]
+    pub teleportfollowdistance: Option<f32>,
     #[serde(default)]
-    pub torquelimit: bool,
+    pub torquelimit: Option<f32>,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct PhysHinge<'a> {
     pub attach1: &'a str,
-    #[serde(deserialize_with = "deserialize_bool")]
-    pub forcelimit: bool,
+    pub forcelimit: f32,
     pub hingeaxis: Vector,
-    pub hingefriction: u8,
+    pub hingefriction: f32,
     pub maxsoundthreshold: u8,
     pub minsoundthreshold: u8,
     pub origin: Vector,
@@ -4747,21 +4772,18 @@ pub struct PhysHinge<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     pub reversalsoundthresholdsmall: bool,
     pub spawnflags: u32,
-    #[serde(deserialize_with = "deserialize_bool")]
-    pub systemloadscale: bool,
+    pub systemloadscale: f32,
     pub targetname: &'a str,
-    #[serde(deserialize_with = "deserialize_bool")]
-    pub teleportfollowdistance: bool,
-    #[serde(deserialize_with = "deserialize_bool")]
-    pub torquelimit: bool,
+    pub teleportfollowdistance: f32,
+    pub torquelimit: f32,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct PhysRagdollmagnet<'a> {
     pub angles: Angles,
     pub axis: Vector,
-    pub force: i32,
+    pub force: f32,
     pub origin: Vector,
-    pub radius: u16,
+    pub radius: f32,
     #[serde(default)]
     pub spawnflags: Option<u32>,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -4773,7 +4795,7 @@ pub struct PhysRagdollmagnet<'a> {
 pub struct PhysThruster<'a> {
     pub angles: Angles,
     pub attach1: &'a str,
-    pub force: u32,
+    pub force: f32,
     pub forcetime: f32,
     pub origin: Vector,
     pub spawnflags: u32,
@@ -4834,14 +4856,13 @@ pub struct PointPush<'a> {
     pub enabled: bool,
     #[serde(default)]
     pub influence_cone: Option<u8>,
-    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub inner_radius: bool,
-    pub magnitude: i32,
+    pub inner_radius: Option<f32>,
+    pub magnitude: f32,
     pub origin: Vector,
     #[serde(default)]
     pub parentname: Option<&'a str>,
-    pub radius: u16,
+    pub radius: f32,
     pub spawnflags: u32,
     #[serde(default)]
     pub targetname: Option<&'a str>,
@@ -4874,8 +4895,9 @@ pub struct PointSpotlight<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub maxdxlevel: bool,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub mindxlevel: Option<u8>,
+    pub mindxlevel: bool,
     pub origin: Vector,
     #[serde(default)]
     pub parentname: Option<&'a str>,
@@ -4946,10 +4968,11 @@ pub struct PointTemplate<'a> {
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct PointTesla<'a> {
-    pub beamcount_max: u8,
-    pub beamcount_min: u8,
     #[serde(deserialize_with = "deserialize_bool")]
-    pub interval_max: bool,
+    pub beamcount_max: bool,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub beamcount_min: bool,
+    pub interval_max: f32,
     pub interval_min: f32,
     pub lifetime_max: f32,
     pub lifetime_min: f32,
@@ -4959,8 +4982,8 @@ pub struct PointTesla<'a> {
     pub origin: Vector,
     pub targetname: &'a str,
     pub texture: &'a str,
-    pub thick_max: u8,
-    pub thick_min: u8,
+    pub thick_max: f32,
+    pub thick_min: f32,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct PointViewcontrol<'a> {
@@ -4979,13 +5002,13 @@ pub struct PointViewcontrol<'a> {
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct PropDoorRotating<'a> {
-    pub ajarangles: Angles,
+    pub ajarangles: Vector,
     pub angles: Angles,
-    pub axis: &'a str,
+    pub axis: Vector,
     #[serde(deserialize_with = "deserialize_bool")]
     pub disableshadows: bool,
-    pub distance: u8,
-    pub dmg: u16,
+    pub distance: f32,
+    pub dmg: f32,
     #[serde(deserialize_with = "deserialize_bool")]
     pub forceclosed: bool,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -4994,9 +5017,10 @@ pub struct PropDoorRotating<'a> {
     pub health: bool,
     pub model: &'a str,
     pub modelscale: f32,
-    pub opendir: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub opendir: bool,
     pub origin: Vector,
-    pub returndelay: i32,
+    pub returndelay: f32,
     #[serde(deserialize_with = "deserialize_bool")]
     pub skin: bool,
     pub spawnflags: u32,
@@ -5297,11 +5321,9 @@ pub struct PropPhysics<'a> {
     pub fademindist: i32,
     #[serde(deserialize_with = "deserialize_bool")]
     pub fadescale: bool,
-    #[serde(deserialize_with = "deserialize_bool")]
-    pub forcetoenablemotion: bool,
+    pub forcetoenablemotion: f32,
     pub inertiascale: f32,
-    #[serde(deserialize_with = "deserialize_bool")]
-    pub massscale: bool,
+    pub massscale: f32,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub maxdxlevel: bool,
@@ -5398,8 +5420,9 @@ pub struct PropPhysicsMultiplayer<'a> {
     #[serde(default)]
     pub performancemode: bool,
     pub physdamagescale: f32,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub physicsmode: Option<u8>,
+    pub physicsmode: bool,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub pressuredelay: bool,
@@ -5449,9 +5472,8 @@ pub struct PropPhysicsOverride<'a> {
     pub fademaxdist: Option<f32>,
     pub fademindist: f32,
     pub fadescale: f32,
-    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub forcetoenablemotion: bool,
+    pub forcetoenablemotion: Option<f32>,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub health: bool,
@@ -5503,8 +5525,7 @@ pub struct PropPhysicsOverride<'a> {
 pub struct PropRagdoll<'a> {
     pub angles: Angles,
     pub fademindist: i32,
-    #[serde(deserialize_with = "deserialize_bool")]
-    pub fadescale: bool,
+    pub fadescale: f32,
     pub model: &'a str,
     pub modelscale: f32,
     pub origin: Vector,
@@ -5532,7 +5553,7 @@ pub struct ShadowControl<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub disableallshadows: bool,
-    pub distance: u16,
+    pub distance: f32,
     pub origin: Vector,
     #[serde(default)]
     pub targetname: Option<&'a str>,
@@ -5543,9 +5564,9 @@ pub struct SkyCamera<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub fogblend: bool,
-    pub fogcolor: &'a str,
-    pub fogcolor2: &'a str,
-    pub fogdir: Angles,
+    pub fogcolor: Color,
+    pub fogcolor2: Color,
+    pub fogdir: Vector,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub fogenable: bool,
@@ -5554,7 +5575,8 @@ pub struct SkyCamera<'a> {
     pub fogmaxdensity: Option<f32>,
     pub fogstart: f32,
     pub origin: Vector,
-    pub scale: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub scale: bool,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub skin: bool,
@@ -5607,18 +5629,22 @@ pub struct TeamControlPoint<'a> {
     pub origin: Vector,
     #[serde(default)]
     pub parentname: Option<&'a str>,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub point_default_owner: Option<u8>,
+    pub point_default_owner: bool,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub point_group: Option<u8>,
+    pub point_group: bool,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub point_index: Option<u8>,
+    pub point_index: bool,
     pub point_printname: &'a str,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub point_start_locked: bool,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub point_warn_on_cap: Option<u8>,
+    pub point_warn_on_cap: bool,
     pub point_warn_sound: &'a str,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
@@ -5694,8 +5720,9 @@ pub struct TeamControlPointMaster<'a> {
     pub angles: Option<Angles>,
     #[serde(default)]
     pub caplayout: Option<&'a str>,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub cpm_restrict_team_cap_win: Option<u8>,
+    pub cpm_restrict_team_cap_win: bool,
     #[serde(default)]
     pub custom_position_x: Option<f32>,
     #[serde(default)]
@@ -5731,10 +5758,12 @@ pub struct TeamControlPointRound<'a> {
     #[serde(default)]
     pub angles: Option<Angles>,
     pub cpr_cp_names: &'a str,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub cpr_priority: Option<u8>,
+    pub cpr_priority: bool,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub cpr_restrict_team_cap_win: Option<u8>,
+    pub cpr_restrict_team_cap_win: bool,
     #[serde(default)]
     pub onend: Option<&'a str>,
     pub onstart: &'a str,
@@ -5755,8 +5784,9 @@ pub struct TeamRoundTimer<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub auto_countdown: bool,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub max_length: Option<u16>,
+    pub max_length: bool,
     #[serde(default)]
     pub on10secremain: Option<&'a str>,
     #[serde(default)]
@@ -5787,8 +5817,9 @@ pub struct TeamRoundTimer<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub reset_time: bool,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub setup_length: Option<u8>,
+    pub setup_length: bool,
     #[serde(deserialize_with = "deserialize_bool")]
     pub show_in_hud: bool,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -5806,7 +5837,8 @@ pub struct TeamRoundTimer<'a> {
     pub teamnum: Option<u8>,
     #[serde(default)]
     pub thinkfunction: Option<&'a str>,
-    pub timer_length: u16,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub timer_length: bool,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct TeamTrainWatcher<'a> {
@@ -5819,9 +5851,9 @@ pub struct TeamTrainWatcher<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub handle_train_movement: bool,
-    pub hud_min_speed_level_1: u8,
-    pub hud_min_speed_level_2: u8,
-    pub hud_min_speed_level_3: u8,
+    pub hud_min_speed_level_1: f32,
+    pub hud_min_speed_level_2: f32,
+    pub hud_min_speed_level_3: f32,
     #[serde(default)]
     pub linked_cp_1: Option<&'a str>,
     #[serde(default)]
@@ -5845,8 +5877,7 @@ pub struct TeamTrainWatcher<'a> {
     #[serde(default)]
     pub ontrainstartrecede: Option<&'a str>,
     pub origin: Vector,
-    #[serde(deserialize_with = "deserialize_bool")]
-    pub speed_forward_modifier: bool,
+    pub speed_forward_modifier: f32,
     #[serde(default)]
     pub start_node: Option<&'a str>,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -5858,8 +5889,9 @@ pub struct TeamTrainWatcher<'a> {
     pub train: &'a str,
     #[serde(deserialize_with = "deserialize_bool")]
     pub train_can_recede: bool,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub train_recede_time: Option<u8>,
+    pub train_recede_time: bool,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub uphill_speed_modifier: bool,
@@ -5880,8 +5912,9 @@ pub struct TfGamerules<'a> {
     pub angles: Option<Angles>,
     #[serde(deserialize_with = "deserialize_bool")]
     pub ctf_overtime: bool,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub hud_type: Option<u8>,
+    pub hud_type: bool,
     #[serde(default)]
     pub linedivider1: Option<&'a str>,
     #[serde(default)]
@@ -5911,7 +5944,7 @@ pub struct TfGamerules<'a> {
 #[derive(Debug, Clone, Deserialize)]
 pub struct TfGenericBomb<'a> {
     pub angles: Angles,
-    pub damage: u16,
+    pub damage: f32,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub disableshadows: bool,
@@ -5932,7 +5965,7 @@ pub struct TfGenericBomb<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub passactivator: bool,
-    pub radius: u16,
+    pub radius: f32,
     #[serde(default)]
     pub renderamt: Option<u8>,
     #[serde(default)]
@@ -6055,7 +6088,8 @@ pub struct TfLogicCpTimer<'a> {
     pub oncountdownstart: &'a str,
     pub origin: Vector,
     pub targetname: &'a str,
-    pub timer_length: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub timer_length: bool,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct TfLogicHoliday<'a> {
@@ -6064,7 +6098,8 @@ pub struct TfLogicHoliday<'a> {
     pub allowhaunting: bool,
     #[serde(default)]
     pub angles: Option<Angles>,
-    pub holiday_type: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub holiday_type: bool,
     pub origin: Vector,
     #[serde(default)]
     pub spawnflags: Option<u32>,
@@ -6087,8 +6122,10 @@ pub struct TfLogicKoth<'a> {
     pub origin: Vector,
     #[serde(default)]
     pub targetname: Option<&'a str>,
-    pub timer_length: u16,
-    pub unlock_point: u16,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub timer_length: bool,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub unlock_point: bool,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct TfLogicMannVsMachine<'a> {
@@ -6139,11 +6176,15 @@ pub struct TfLogicPlayerDestruction<'a> {
     pub angles: Option<Angles>,
     pub blue_respawn_time: u8,
     pub finale_length: f32,
-    pub flag_reset_delay: u8,
-    pub heal_distance: u16,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub flag_reset_delay: bool,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub heal_distance: bool,
+    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub max_points: Option<u8>,
-    pub min_points: u8,
+    pub max_points: bool,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub min_points: bool,
     pub onbluehitmaxpoints: &'a str,
     pub onbluescorechanged: &'a str,
     #[serde(default)]
@@ -6151,7 +6192,8 @@ pub struct TfLogicPlayerDestruction<'a> {
     pub onredhitmaxpoints: &'a str,
     pub onredscorechanged: &'a str,
     pub origin: Vector,
-    pub points_per_player: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub points_per_player: bool,
     #[serde(default)]
     pub prop_drop_sound: Option<&'a str>,
     pub prop_model_name: &'a str,
@@ -6159,9 +6201,8 @@ pub struct TfLogicPlayerDestruction<'a> {
     pub prop_pickup_sound: Option<&'a str>,
     pub red_respawn_time: u8,
     pub res_file: &'a str,
-    #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
-    pub score_interval: bool,
+    pub score_interval: Option<f32>,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub skin: bool,
@@ -6170,9 +6211,10 @@ pub struct TfLogicPlayerDestruction<'a> {
 #[derive(Debug, Clone, Deserialize)]
 pub struct TfLogicRobotDestruction<'a> {
     pub blue_respawn_time: u8,
-    pub finale_length: u8,
+    pub finale_length: f32,
     pub loser_respawn_bonus_per_bot: f32,
-    pub max_points: u16,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub max_points: bool,
     pub onbluefirstflagstolen: &'a str,
     pub onblueflagstolen: &'a str,
     pub onbluehaspoints: &'a str,
@@ -6185,8 +6227,7 @@ pub struct TfLogicRobotDestruction<'a> {
     pub onredlastflagreturned: &'a str,
     pub origin: Vector,
     pub red_respawn_time: u8,
-    #[serde(deserialize_with = "deserialize_bool")]
-    pub score_interval: bool,
+    pub score_interval: f32,
     pub targetname: &'a str,
 }
 #[derive(Debug, Clone, Deserialize)]
@@ -6251,10 +6292,13 @@ pub struct TfPumpkinBomb {
 #[derive(Debug, Clone, Deserialize)]
 pub struct TfRobotDestructionRobotSpawn<'a> {
     pub angles: Angles,
-    pub gibs: u8,
-    pub health: u16,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub gibs: bool,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub health: bool,
     pub origin: Vector,
-    pub r#type: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub r#type: bool,
     pub spawngroup: &'a str,
     pub startpath: &'a str,
     pub targetname: &'a str,
@@ -6263,14 +6307,16 @@ pub struct TfRobotDestructionRobotSpawn<'a> {
 pub struct TfRobotDestructionSpawnGroup<'a> {
     #[serde(default)]
     pub angles: Option<Angles>,
-    pub group_number: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub group_number: bool,
     pub hud_icon: &'a str,
     pub origin: Vector,
     pub respawn_reduction_scale: f32,
     #[serde(default)]
-    pub respawn_time: Option<u8>,
+    pub respawn_time: Option<f32>,
     pub targetname: &'a str,
-    pub team_number: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub team_number: bool,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct TfSpellPickup<'a> {
@@ -6371,13 +6417,14 @@ pub struct TfZombieSpawner<'a> {
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub infinite_zombies: bool,
-    pub max_zombies: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub max_zombies: bool,
     pub origin: Vector,
     pub targetname: &'a str,
     #[serde(default)]
     pub teamnum: Option<u8>,
     #[serde(default)]
-    pub zombie_lifetime: Option<u8>,
+    pub zombie_lifetime: Option<f32>,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub zombie_scale: bool,
@@ -6390,10 +6437,9 @@ pub struct TrainingAnnotation<'a> {
     #[serde(default)]
     pub angles: Option<Angles>,
     pub display_text: &'a str,
-    pub lifetime: i32,
-    #[serde(deserialize_with = "deserialize_bool")]
+    pub lifetime: f32,
     #[serde(default)]
-    pub offset: bool,
+    pub offset: Option<f32>,
     pub origin: Vector,
     pub targetname: &'a str,
     #[serde(default)]
@@ -6449,7 +6495,7 @@ pub struct TriggerAddOrRemoveTfPlayerAttributes<'a> {
     #[serde(default)]
     pub angles: Option<Angles>,
     pub attribute_name: &'a str,
-    pub duration: i32,
+    pub duration: f32,
     #[serde(default)]
     pub filtername: Option<&'a str>,
     pub model: &'a str,
@@ -6467,7 +6513,8 @@ pub struct TriggerAddOrRemoveTfPlayerAttributes<'a> {
 pub struct TriggerAddTfPlayerCondition<'a> {
     #[serde(default)]
     pub angles: Option<Angles>,
-    pub condition: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub condition: bool,
     pub duration: f32,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
@@ -6501,8 +6548,8 @@ pub struct TriggerAddTfPlayerCondition<'a> {
 pub struct TriggerApplyImpulse<'a> {
     #[serde(default)]
     pub filtername: Option<&'a str>,
-    pub force: u16,
-    pub impulse_dir: Angles,
+    pub force: f32,
+    pub impulse_dir: Vector,
     pub model: &'a str,
     pub origin: Vector,
     pub spawnflags: u32,
@@ -6647,11 +6694,12 @@ pub struct TriggerHurt<'a> {
     #[serde(default)]
     pub angles: Option<Angles>,
     pub damage: f32,
-    pub damagecap: u32,
+    pub damagecap: f32,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub damagemodel: bool,
-    pub damagetype: f32,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub damagetype: bool,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub effects: bool,
@@ -6695,8 +6743,8 @@ pub struct TriggerHurt<'a> {
 pub struct TriggerIgnite<'a> {
     #[serde(default)]
     pub angles: Option<Angles>,
-    pub burn_duration: u8,
-    pub damage_percent_per_second: u8,
+    pub burn_duration: f32,
+    pub damage_percent_per_second: f32,
     #[serde(default)]
     pub filtername: Option<&'a str>,
     pub model: &'a str,
@@ -6735,8 +6783,7 @@ pub struct TriggerLook<'a> {
     pub startdisabled: bool,
     pub target: &'a str,
     pub targetname: &'a str,
-    #[serde(deserialize_with = "deserialize_bool")]
-    pub timeout: bool,
+    pub timeout: f32,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct TriggerMultiple<'a> {
@@ -6823,8 +6870,7 @@ pub struct TriggerPlayerRespawnOverride<'a> {
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct TriggerPush<'a> {
-    #[serde(deserialize_with = "deserialize_bool")]
-    pub alternateticksfix: bool,
+    pub alternateticksfix: f32,
     #[serde(default)]
     pub angles: Option<Angles>,
     #[serde(default)]
@@ -6842,7 +6888,7 @@ pub struct TriggerPush<'a> {
     pub origin: Vector,
     #[serde(default)]
     pub parentname: Option<&'a str>,
-    pub pushdir: Angles,
+    pub pushdir: Vector,
     pub spawnflags: u32,
     pub speed: u16,
     #[serde(deserialize_with = "deserialize_bool")]
@@ -6872,7 +6918,8 @@ pub struct TriggerRdVaultTrigger<'a> {
 pub struct TriggerRemoveTfPlayerCondition<'a> {
     #[serde(default)]
     pub angles: Option<Angles>,
-    pub condition: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub condition: bool,
     pub model: &'a str,
     #[serde(default)]
     pub onstarttouch: Option<&'a str>,
@@ -6923,10 +6970,11 @@ pub struct TriggerStun<'a> {
     pub spawnflags: u32,
     #[serde(deserialize_with = "deserialize_bool")]
     pub startdisabled: bool,
-    pub stun_duration: u16,
+    pub stun_duration: f32,
     #[serde(deserialize_with = "deserialize_bool")]
     pub stun_effects: bool,
-    pub stun_type: u8,
+    #[serde(deserialize_with = "deserialize_bool")]
+    pub stun_type: bool,
     #[serde(default)]
     pub targetname: Option<&'a str>,
     pub trigger_delay: f32,
@@ -6977,7 +7025,7 @@ pub struct TriggerTeleportRelative<'a> {
 #[derive(Debug, Clone, Deserialize)]
 pub struct TriggerTimerDoor<'a> {
     pub area_cap_point: &'a str,
-    pub area_time_to_cap: u8,
+    pub area_time_to_cap: f32,
     pub door_name: &'a str,
     pub filtername: &'a str,
     pub model: &'a str,
@@ -7031,8 +7079,8 @@ pub struct TriggerVphysicsMotion<'a> {
 pub struct WaterLodControl<'a> {
     #[serde(default)]
     pub angles: Option<Angles>,
-    pub cheapwaterenddistance: u32,
-    pub cheapwaterstartdistance: u32,
+    pub cheapwaterenddistance: f32,
+    pub cheapwaterstartdistance: f32,
     #[serde(default)]
     pub origin: Option<Vector>,
     #[serde(default)]
@@ -7041,7 +7089,7 @@ pub struct WaterLodControl<'a> {
 #[derive(Debug, Clone, Deserialize)]
 pub struct WheelOfDoom<'a> {
     pub angles: Angles,
-    pub effect_duration: u8,
+    pub effect_duration: f32,
     #[serde(deserialize_with = "deserialize_bool")]
     pub has_spiral: bool,
     pub oneffectapplied: &'a str,
@@ -7077,7 +7125,7 @@ pub struct Worldspawn<'a> {
     pub mapversion: u16,
     #[serde(default)]
     pub maxoccludeearea: Option<f32>,
-    pub maxpropscreenwidth: i32,
+    pub maxpropscreenwidth: f32,
     #[serde(default)]
     pub maxrange: Option<u16>,
     #[serde(default)]
@@ -7085,9 +7133,9 @@ pub struct Worldspawn<'a> {
     #[serde(default)]
     pub minoccluderarea: Option<f32>,
     #[serde(default)]
-    pub minoccluderarea_x360: Option<u8>,
+    pub minoccluderarea_x360: Option<f32>,
     #[serde(default)]
-    pub minpropscreenwidth: Option<u8>,
+    pub minpropscreenwidth: Option<f32>,
     #[serde(deserialize_with = "deserialize_bool")]
     #[serde(default)]
     pub newunit: bool,
